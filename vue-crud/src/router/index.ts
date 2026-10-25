@@ -17,6 +17,7 @@ import RoleForm from '../pages/RoleForm.vue';
 import MembershipPaymentList from '../pages/MembershipPaymentList.vue';
 import MembershipPaymentForm from '../pages/MembershipPaymentForm.vue';
 
+
 const routes: RouteRecordRaw[] = [
   { path: '/login', component: Login },
   { path: '/register', component: Register },

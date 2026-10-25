@@ -12,3 +12,5 @@ navigation (`src/App.vue`) mis à jour en conséquence.
 - N'installe pas `node_modules` ici (le squelette reste versionné sans dépendances).
 
 Pour tester ce squelette manuellement : `npm install` puis `npm run dev`.
+
+

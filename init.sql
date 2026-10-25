@@ -17,6 +17,14 @@ CREATE TABLE member (
   phone VARCHAR(255)
 );
 
+
+-- CREATE TABLE product (
+--   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--   name  VARCHAR(255),
+--   price INTEGER
+-- );
+
+
 INSERT INTO member (name, firstname, "dateOfBirth", email, phone) VALUES
 ('Rakoto',      'Jean',   '2006-01-15', 'jean.rakoto@mail.mg',      '0341100001'),
 ('Rasoa',       'Marie',  '1999-05-20', 'marie.rasoa@mail.mg',      '0341100002'),
@@ -53,6 +61,10 @@ CREATE TABLE branch (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(255)
 );
+
+-- color(id UUID default, label VARCHAR)
+INSERT INTO branch (name)          -- 1. je choisis la colonne, PAS id
+VALUES ('test');                  -- 2. je donne la valeur entre quotes
 
 CREATE TABLE role (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

@@ -13,12 +13,15 @@ import { MembershipFeeModule } from './membership-fee/membership-fee.module';
 import { TerritoryLevelModule } from './territory-level/territory-level.module';
 import { RoleModule } from './role/role.module';
 import { MembershipPaymentModule } from './membership-payment/membership-payment.module';
+import { ProductModule } from './product/product.module';
+
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
+ 
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
@@ -40,6 +43,7 @@ import { MembershipPaymentModule } from './membership-payment/membership-payment
     TerritoryLevelModule,
     RoleModule,
     MembershipPaymentModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

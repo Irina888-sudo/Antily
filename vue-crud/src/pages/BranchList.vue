@@ -43,6 +43,7 @@ const handleDelete = async (id: unknown) => {
           <th>id</th>
           <th>name</th>
           <th></th>
+          <th>date de création</th>
         </tr>
       </thead>
       <tbody>
@@ -53,6 +54,7 @@ const handleDelete = async (id: unknown) => {
             <RouterLink :to="`/branch/${row.id}/edit`">Modifier</RouterLink>
             <button type="button" class="btn danger" @click="handleDelete(row.id)">Supprimer</button>
           </td>
+          <td>{{ row.createdAt }}</td>
         </tr>
       </tbody>
     </table>

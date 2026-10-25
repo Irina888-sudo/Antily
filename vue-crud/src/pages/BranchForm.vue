@@ -24,14 +24,14 @@ onMounted(() => {
     .finally(() => { loading.value = false; });
 });
 
-const handleSubmit = async () => {
+const handleSubmit = async () => {   // quand on clique "Enregistrer"
   error.value = null;
   const payload = {
     name: values.name,
   };
   try {
-    if (isEdit && id) await apiClient.update('branch', id, payload);
-    else await apiClient.create('branch', payload);
+    if (isEdit && id) await apiClient.update('branch', id, payload);   // PATCH /branch/42
+    else await apiClient.create('branch', payload);  // POST /branch
     router.push('/branch');
   } catch (err) {
     error.value = err instanceof Error ? err.message : "Erreur lors de l'enregistrement";

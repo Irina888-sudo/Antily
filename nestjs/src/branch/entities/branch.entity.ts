@@ -1,8 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
+import { Product } from 'src/product/entities/product.entity';
+
 
 @Entity('branch')
+
 export class Branch {
+  @OneToMany(() => Product, (product) => product.branch)
+Product!: Product[];
+
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -21,4 +27,5 @@ export class Branch {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+    product: any;
 }
