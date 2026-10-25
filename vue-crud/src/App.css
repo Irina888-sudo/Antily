@@ -1,101 +1,275 @@
+/* ============================================================
+   ANTILY : thème scout (composants)
+   Fichier : vue-crud/src/App.css
+   Les variables (--foret, --sable...) viennent de index.css
+   ============================================================ */
+
+/* ---------- Structure : menu à gauche + contenu ---------- */
+
 .app-shell {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 24px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
 }
 
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px;
+  background-color: var(--foret);
+  /* fines rayures diagonales : effet toile */
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.025) 0,
+    rgba(255, 255, 255, 0.025) 2px,
+    transparent 2px,
+    transparent 10px
+  );
+  color: var(--sable);
+  border-right: 4px solid var(--cuir);
+}
+
+.sidebar-brand {
+  font-family: var(--police-titre);
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  padding: 4px 12px 20px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(241, 235, 218, 0.25);
+}
+.sidebar-brand::before {
+  content: '⚜ ';
+  color: var(--foulard);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sidebar-nav a {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border-left: 4px solid transparent;
+  color: var(--sable);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.sidebar-nav a:hover {
+  background: var(--foret-sombre);
+  color: #fff;
+}
+.sidebar-nav a.active {
+  background: var(--foret-sombre);
+  border-left-color: var(--foulard);
+  color: #fff;
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  margin-top: 24px;
+  padding: 12px;
+  border-top: 1px solid rgba(241, 235, 218, 0.25);
+  font-size: 12px;
+  color: rgba(241, 235, 218, 0.7);
+}
+.sidebar-footer p {
+  margin: 0 0 6px;
+}
+.sidebar-footer a {
+  color: var(--foulard);
+  font-weight: 600;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 12px 32px;
+  background: var(--papier);
+  border-bottom: 1px solid var(--bordure);
+}
+.topbar-action {
+  font-size: 14px;
+  padding: 6px 14px;
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  color: var(--cuir);
+}
+.topbar-action:hover {
+  background: var(--sable);
+  text-decoration: none;
+}
+
+.main-content {
+  padding: 32px;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* Ancien menu (gardé pour compatibilité) */
 .app-nav {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--bordure);
 }
 
-.app-nav a {
-  font-weight: 600;
-}
+/* ---------- En-tête de page ---------- */
 
 .page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 3px double var(--cuir);
 }
+
+/* ---------- Boutons ---------- */
 
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 9px 16px;
+  border-radius: var(--rayon);
   border: 1px solid transparent;
-  background: #2563eb;
+  background: var(--foulard);
   color: #fff;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.05s ease;
 }
 .btn:hover {
-  background: #1d4ed8;
+  background: var(--foulard-sombre);
+  color: #fff;
+  text-decoration: none;
+}
+.btn:active {
+  transform: translateY(1px);
 }
 .btn.secondary {
-  background: #fff;
-  color: #0f172a;
-  border-color: #cbd5e1;
+  background: var(--papier);
+  color: var(--foret);
+  border-color: var(--bordure);
 }
 .btn.secondary:hover {
-  background: #f1f5f9;
+  background: var(--sable);
+  color: var(--foret);
 }
 .btn.danger {
-  background: #fff;
-  color: #dc2626;
-  border-color: #fecaca;
+  background: var(--papier);
+  color: var(--danger);
+  border-color: #e5b7b3;
 }
 .btn.danger:hover {
-  background: #fef2f2;
+  background: var(--danger-fond);
+  color: var(--danger);
+}
+
+/* ---------- Carte + tableau ---------- */
+
+.card {
+  background: var(--papier);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+  overflow: hidden;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  background: var(--papier);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
   overflow: hidden;
 }
+.card table {
+  border: none;
+  border-radius: 0;
+}
 th, td {
-  padding: 10px 12px;
+  padding: 11px 14px;
   text-align: left;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--bordure);
   font-size: 14px;
 }
 th {
-  background: #f1f5f9;
+  background: var(--foret);
+  color: var(--sable);
   font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+tbody tr:nth-child(even) {
+  background: rgba(241, 235, 218, 0.5);
+}
+tbody tr:hover {
+  background: rgba(224, 122, 31, 0.08);
 }
 tr:last-child td {
   border-bottom: none;
 }
+td .btn {
+  margin-left: 8px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+/* ---------- Formulaires ---------- */
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   max-width: 480px;
 }
 form label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--cuir);
 }
-form input {
-  padding: 8px 10px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
+form input,
+form select,
+form textarea {
+  padding: 9px 11px;
+  border: 1px solid var(--bordure);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--texte);
+  font-family: inherit;
   font-size: 14px;
+}
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: var(--foret);
+  box-shadow: 0 0 0 3px rgba(31, 77, 58, 0.18);
+}
+form input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--foulard);
 }
 .form-actions {
   display: flex;
@@ -103,26 +277,182 @@ form input {
   margin-top: 8px;
 }
 
+/* Les pages de formulaire sont dans une "carte papier" */
+.main-content > div > div > form,
+.main-content > div > form {
+  background: var(--papier);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+  padding: 24px;
+  margin-top: 16px;
+}
+
+/* ---------- Messages ---------- */
+
 .empty-state {
-  color: #64748b;
+  color: var(--texte-doux);
   font-size: 14px;
   padding: 24px 0;
 }
 
-/* ---------------------------------------------------------------------------
-   Bloc maître-détail (fiche de modification) : lignes rattachées à l'enregistrement en cours,
-   ex. les lignes d'une commande gérées directement depuis sa fiche.
---------------------------------------------------------------------------- */
+/* ---------- Bloc maître-détail ---------- */
 
 .detail-block {
   margin-top: 40px;
   padding-top: 32px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 3px double var(--cuir);
+}
+.detail-block h2 {
+  font-size: 18px;
+  margin: 0 0 16px;
+}
+.detail-add-form {
+  max-width: none;
+  margin-top: 16px;
 }
 
-.detail-block h2 {
-  font-size: 16px;
+/* ---------- Badges ---------- */
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
   font-weight: 700;
-  color: #0f172a;
+}
+.badge-success {
+  background: #dcebd9;
+  color: #2d5a2d;
+}
+.badge-warning {
+  background: #fbe5cc;
+  color: #a2530c;
+}
+.badge-neutral {
+  background: #e8e2cf;
+  color: var(--cuir);
+}
+
+/* ---------- Connexion / Inscription ---------- */
+
+.auth-shell {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+.auth-form-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: var(--sable);
+}
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 32px;
+  background: var(--papier);
+  border: 1px solid var(--bordure);
+  border-radius: 14px;
+  box-shadow: var(--ombre);
+}
+.auth-brand {
+  font-family: var(--police-titre);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--foret);
+  margin-bottom: 20px;
+}
+.auth-brand::before {
+  content: '⚜ ';
+  color: var(--foulard);
+}
+.auth-title {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+.auth-subtitle {
+  margin: 0 0 20px;
+  color: var(--texte-doux);
+  font-size: 14px;
+}
+.auth-switch {
+  margin: 20px 0 0;
+  font-size: 14px;
+  color: var(--texte-doux);
+}
+.auth-preview-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background-color: var(--foret);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.025) 0,
+    rgba(255, 255, 255, 0.025) 2px,
+    transparent 2px,
+    transparent 10px
+  );
+}
+.preview-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 24px;
+  background: var(--papier);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.preview-card h2 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.preview-card p {
   margin: 0 0 16px;
+  color: var(--texte-doux);
+  font-size: 14px;
+}
+.preview-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid var(--bordure);
+}
+.preview-row-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- Téléphone et petits écrans ---------- */
+
+@media (max-width: 820px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    border-right: none;
+    border-bottom: 4px solid var(--cuir);
+    padding: 16px;
+  }
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .sidebar-footer {
+    display: none;
+  }
+  .main-content {
+    padding: 16px;
+  }
+  .card {
+    overflow-x: auto;
+  }
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
+  .auth-preview-side {
+    display: none;
+  }
 }

@@ -1,5 +1,33 @@
+/* ============================================================
+   ANTILY : thème scout (réglages de base + palette)
+   Fichier : vue-crud/src/index.css
+   ============================================================ */
+
 :root {
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Palette scoute */
+  --foret: #1f4d3a;          /* uniforme, menu */
+  --foret-sombre: #163828;   /* survol, ombres du menu */
+  --mousse: #4c7a4c;         /* succès, accents doux */
+  --sable: #f1ebda;          /* fond de page (toile de tente) */
+  --papier: #fbf8ef;         /* cartes, formulaires (carnet de camp) */
+  --cuir: #6b4a2b;           /* détails, titres secondaires */
+  --foulard: #e07a1f;        /* bouton principal, accent */
+  --foulard-sombre: #c4660f;
+  --texte: #1e2a22;
+  --texte-doux: #5b6b5f;
+  --bordure: #d9d0b8;
+  --danger: #b3261e;
+  --danger-fond: #fbeae8;
+
+  /* Forme */
+  --rayon: 10px;
+  --ombre: 0 1px 2px rgba(30, 42, 34, 0.08), 0 4px 12px rgba(30, 42, 34, 0.06);
+
+  /* Police : sans-serif pour le texte, serif pour les titres (effet carnet) */
+  --police-texte: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --police-titre: Georgia, Cambria, 'Times New Roman', serif;
+
+  font-family: var(--police-texte);
   color-scheme: light;
 }
 
@@ -9,18 +37,37 @@
 
 body {
   margin: 0;
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--sable);
+  color: var(--texte);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--police-titre);
+  color: var(--foret);
+  margin: 0;
+}
+
+h1 {
+  font-size: 26px;
 }
 
 a {
-  color: #2563eb;
+  color: var(--foret);
   text-decoration: none;
+  font-weight: 600;
 }
 a:hover {
+  color: var(--foulard-sombre);
   text-decoration: underline;
 }
 
 button {
   font-family: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--foulard);
+  outline-offset: 2px;
 }
