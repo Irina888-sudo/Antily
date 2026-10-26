@@ -108,3 +108,26 @@ schema.txt : liste + formulaire dans le voyage complet
 
 [9] clic "Supprimer"         → handleDelete → apiClient.remove → DELETE /branch/42
                              → load() : on recharge la liste
+
+
+
+
+AUTHENTIFICATION
+schema.txt : les fichiers de l'étape 2, dans l'ordre d'écriture
+
+nestjs/src/
+├── auth/                              ← [1] CRÉE le dossier
+│   ├── dto/register.dto.ts            ← [2] email + mot de passe reçus (le videur)
+│   ├── auth.service.ts                ← [3] le travail : vérifier, brouiller, enregistrer
+│   ├── auth.controller.ts             ← [4] la route POST /auth/register
+│   └── auth.module.ts                 ← [5] assemble le tout (forFeature([User]))
+├── user/entities/user.entity.ts       ← déjà fait ✔ (le service l'importe)
+├── app.module.ts                      ← [6] AJOUTE AuthModule dans imports: [...]
+└── main.ts                            ← [7] ACTIVE ValidationPipe
+
+Le chemin d'une inscription :
+POST /auth/register ─► [4] controller ─► [3] service
+                                            ├─ email déjà pris ? → erreur 409
+                                            ├─ brouille le mot de passe
+                                            └─ enregistre { email, passwordHash }
+                                         ─► renvoie { id, email }   (jamais le hash)

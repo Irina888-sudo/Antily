@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -7,6 +8,7 @@ async function bootstrap() {
   // n'importe quel frontend (React, Vue, Svelte, Angular...) tournant sur un autre port
   // puisse appeler l'API sans configuration supplémentaire. À restreindre en production.
   app.enableCors();
+  app.useGlobalPipes(new ValidationPipe()); 
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

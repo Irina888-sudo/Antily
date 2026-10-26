@@ -14,6 +14,7 @@ import { TerritoryLevelModule } from './territory-level/territory-level.module';
 import { RoleModule } from './role/role.module';
 import { MembershipPaymentModule } from './membership-payment/membership-payment.module';
 import { ProductModule } from './product/product.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -44,6 +45,7 @@ import { ProductModule } from './product/product.module';
     RoleModule,
     MembershipPaymentModule,
     ProductModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
