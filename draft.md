@@ -131,3 +131,9 @@ POST /auth/register ─► [4] controller ─► [3] service
                                             ├─ brouille le mot de passe
                                             └─ enregistre { email, passwordHash }
                                          ─► renvoie { id, email }   (jamais le hash)
+
+
+-------------------------------------------------------
+CURL
+Login add user 
+curl -X POST http://localhost:3000/auth/register -H "Content-Type: application/json" -d '{"email":"a@b.com","password":"12345678"}'
