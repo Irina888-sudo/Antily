@@ -1,0 +1,92 @@
+Parcours complet : 8 étapes
+#	Étape	Fichier(s)	Preuve à me montrer	État
+1	Réparer register	auth.module.ts	Le serveur démarre	✅
+2	Tester register	terminal + Postgres	201 puis 409, ligne en base	✅
+3	login (API)	login.dto.ts, auth.service.ts, auth.controller.ts	200 avec le bon mot de passe, 401 avec le faux	🟡 On y est
+4	JWT : le badge	auth.module.ts, auth.service.ts, .env	Un access_token reçu	⬜
+5	Guard : protéger les routes	nouveau guard + controllers	401 sans badge, 200 avec	⬜
+6	Export CSV des membres (API)	member.controller.ts, member.service.ts	Un fichier .csv téléchargé avec curl + badge	⬜
+7	Front : Register.vue et Login.vue branchés	client.ts, Login.vue, Register.vue	Connexion réussie dans le navigateur	⬜
+8	Front : pages protégées + bouton « Exporter CSV »	router/index.ts, MemberList.vue	/member renvoie vers /login sans token, et le CSV se télécharge	⬜
+
+
+
+
+
+
+
+
+
+Étape 5 validée, avec les trois preuves vues. ✅
+Test	Attendu	Reçu
+Sans badge	401	✅ 401 Token manquant
+Faux badge	401	✅ 401 Token invalide
+Vrai badge	200	✅ 200 avec la liste des membres
+
+Progression : 5/8 (63 %). Tu as enchaîné 3 réussites avec la commande TOKEN=$(...), donc j’accélère.
+
+Une seule chose en suspens : régénérer JWT_SECRET (la chaîne collée plus haut). Fais-le quand tu peux, puis relance le serveur et refais le TOKEN=$(...).
+
+Réponse à ma question d’hier : un $TOKEN vide envoie l’en-tête Bearer (le mot suivi d’un espace). Ce n’est pas un en-tête vide, donc !header est faux. Le split donne ensuite un token "", que verifyAsync refuse. C’est pour ça que tu as eu « invalide » et non « manquant ».
+
+Ta liste contient aussi deux fois Mihaja Irina (même email, deux id). Ton export CSV les affichera tous les deux : ce n’est pas un bug de l’export.
+Étape 6 : l’export CSV des membres
+
+Tu exportes la table member, pas users : tu l’as compris. On construit en deux pièces, service d’abord, route ensuite.
+Concept	Explication courte	Analogie
+CSV	Du texte : une ligne par membre, colonnes séparées par des virgules	Un tableau Excel écrit à la main
+Header	La première ligne, avec les noms des colonnes	Les titres du tableau
+map	Transforme chaque élément d’une liste en autre chose	Une chaîne de montage : un membre entre, une ligne de texte sort
+join	Colle les éléments d’une liste avec un séparateur	Coller des perles sur un fil
+Mot	Veut dire	Dans le projet
+map	Appliquer une transformation à chaque élément	Un Member devient une ligne CSV
+join(',')	Coller avec des virgules	Les 5 champs d’une ligne
+join('\n')	Coller avec des retours à la ligne	Les lignes du fichier
+??	« sinon, cette valeur »	Une case vide devient ''
+
+schema.txt — comment une ligne CSV naît
+
+ (1) repository.find()          → [ {name:"Rakoto", firstname:"Jean", ...}, {...} ]   (TypeORM)
+ (2) members.map(m => ...)      → [ '"Rakoto","Jean",...', '"Rabe","Tiana",...' ]      (une chaîne par membre)
+ (3) [header, ...lines]         → une liste : titres d'abord, puis les membres
+ (4) .join('\n')                → UN texte avec un retour à la ligne entre chaque
+
+Pièce 1 : la méthode dans member.service.ts
+
+Ta référence est findAll(), juste au-dessus : tu y vois déjà comment on lit tous les membres.
+ts
+
+async exportCsv() {
+  const members = await this.repository.???1();
+  const header = 'name,firstname,dateOfBirth,email,phone';
+  const lines = members.map((m) =>
+    [m.name, m.???2, m.???3, m.email, m.???4]
+      .map((v) => `"${v ?? ''}"`)
+      .join(','),
+  );
+  return [header, ...lines].join('???5');
+}
+
+Trou	Indice
+???1	La méthode TypeORM qui lit toutes les lignes, celle de findAll(). Ici, sans relations : le CSV n’en a pas besoin.
+???2, ???3, ???4	Les noms exacts des colonnes de member.entity.ts (comparés au header écrit juste au-dessus)
+???5	Le caractère de retour à la ligne, vu dans le schéma (\n, en deux caractères)
+
+Les guillemets autour de chaque valeur évitent qu’une virgule dans un nom casse les colonnes. Un cas plus rare (un guillemet dans une valeur) n’est pas géré : on le verra si le temps le permet.
+
+Écris-le de mémoire, puis montre-moi la méthode et la sortie du terminal 1 (Found 0 errors). Pas de route ni de test cette fois : une pièce à la fois.
+
+Pour la suite, un piège t’attend. Dans member.controller.ts, la route export devra être placée avant @Get(':id'), comme ta route exists : sinon :id avalera le mot « export ». Je te guiderai à la pièce 2.
+
+Une blague : un CSV sans guillemets, c’est une phrase sans ponctuation : « Rakoto, Jean-Paul » devient trois colonnes et personne ne comprend plus rien.
+À retenir
+
+    Un CSV est un texte : un header, puis une ligne par membre.
+    map transforme chaque membre, join colle le résultat.
+    On exporte les member, jamais les users.
+
+Progression : 5/8 (63 %).
+
+Ma question : dans map((m) => ...), que représente m ?
+
+s

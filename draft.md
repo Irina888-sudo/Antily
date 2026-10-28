@@ -137,3 +137,6 @@ POST /auth/register ─► [4] controller ─► [3] service
 CURL
 Login add user 
 curl -X POST http://localhost:3000/auth/register -H "Content-Type: application/json" -d '{"email":"a@b.com","password":"12345678"}'
+
+ curl -X POST http://localhost:3000/auth/login -H "Content-Type: application/json" -d '{"email":"a@b.com","password":"12345678"}'
+{"id":"7ed3b385-09dd-4bb3-9a41-2f886c696de1","email":"a@b.com"}    

@@ -22,7 +22,7 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
- 
+      
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
@@ -46,6 +46,7 @@ import { AuthModule } from './auth/auth.module';
     MembershipPaymentModule,
     ProductModule,
     AuthModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],

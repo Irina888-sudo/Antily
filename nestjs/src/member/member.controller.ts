@@ -2,6 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { MemberService } from './member.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+
+
+@UseGuards(JwtAuthGuard)
 
 
 @Controller('member')
@@ -37,4 +42,6 @@ export class MemberController {
   remove(@Param('id') id: string) {
     return this.service.remove(id);
   }
+
+ 
 }
