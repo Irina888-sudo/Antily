@@ -29,6 +29,7 @@ export const apiClient = {
     request<T>(`/${resource}/${id}`, { method: 'PATCH', body: JSON.stringify(body) }),
   remove: (resource: string, id: string | number) =>
     request<void>(`/${resource}/${id}`, { method: 'DELETE' }),
+  
 };
 
 export async function downloadFile(path: string, filename: string) {

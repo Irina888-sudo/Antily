@@ -76,4 +76,11 @@ export class MemberService {
   return { imported, skipped };                             // APRÈS la boucle
 }
 
+
+async countMember(){
+  const member = await this.repository.find({ relations: ['memberships'] });
+  const number = await this.repository.count({ where: { member } as any });
+  return number;
+  
+}
 }

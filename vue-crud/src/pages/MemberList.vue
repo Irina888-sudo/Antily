@@ -7,6 +7,7 @@ type Row = Record<string, unknown>;
 const rows = ref<Row[]>([]);
 const loading = ref(true);
 const error = ref<string | null>(null);
+const count = ref<number | null>(null);
 
 const message = ref('');
 
@@ -29,6 +30,9 @@ const load = () => {
   error.value = null;
   apiClient
     .list<Row>('member')
+    .get<number>('member', 'count')
+  .then((n) => { count.value = n; })
+  .catch(() => { count.value = null; })
     .then((data) => { rows.value = data; })
     .catch((e) => { error.value = e instanceof Error ? e.message : 'Erreur de chargement'; })
     .finally(() => { loading.value = false; });
@@ -46,6 +50,7 @@ const handleDelete = async (id: unknown) => {
 <template>
   <div>
     <div class="page-header">
+      <p v-if="count !== null">Membres : {{ count }}</p>
         <p v-if="message" class="empty-state">{{ message }}</p>
       <h1>Member</h1>
       <RouterLink class="btn" to="/member/new">+ Nouveau</RouterLink>

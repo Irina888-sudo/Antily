@@ -31,6 +31,12 @@ export class MemberController {
     return this.service.findAll();
   }
 
+
+  @Get('count')
+  countMember(){
+    return this.service.countMember();
+  }
+
     @Get('exists')
   exists(@Query('dateOfBirth') dateOfBirth: string) {
     return this.service.existsByBirthDate(dateOfBirth);
