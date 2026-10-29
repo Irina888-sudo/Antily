@@ -55,3 +55,9 @@ export const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to) => {
+  const publicPages = ['/login', '/register'];
+  const token = localStorage.getItem('access_token');
+  if (!publicPages.includes(to.path) && !token) return '/login';
+});

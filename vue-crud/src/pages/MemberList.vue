@@ -1,12 +1,28 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { apiClient } from '../api/client';
+import { apiClient, downloadFile, uploadFile } from '../api/client';
 
 type Row = Record<string, unknown>;
 
 const rows = ref<Row[]>([]);
 const loading = ref(true);
 const error = ref<string | null>(null);
+
+const message = ref('');
+
+const onFile = async (e: Event) => {
+  const input = e.target as HTMLInputElement;
+  const file = input.files?.[0];                  // le fichier choisi
+  if (!file) return;
+  try {
+    const result = await uploadFile<{ imported: number; skipped: number }>('/member/import', file);
+    message.value = `${result.imported} importé(s), ${result.skipped} ignoré(s)`;
+    load();                                       // recharger la liste
+  } catch {
+    message.value = "Échec de l'import";
+  }
+  input.value = '';                               // permet de rechoisir le même fichier
+};
 
 const load = () => {
   loading.value = true;
@@ -30,8 +46,12 @@ const handleDelete = async (id: unknown) => {
 <template>
   <div>
     <div class="page-header">
+        <p v-if="message" class="empty-state">{{ message }}</p>
       <h1>Member</h1>
       <RouterLink class="btn" to="/member/new">+ Nouveau</RouterLink>
+      <button type="button" class="btn secondary" @click="downloadFile('/member/export', 'membres.csv')">Exporter CSV</button>
+      <input type="file" accept=".csv" @change="onFile" />
+
     </div>
     <p v-if="loading">Chargement...</p>
     <p v-else-if="error" class="empty-state">{{ error }}</p>
@@ -66,4 +86,5 @@ const handleDelete = async (id: unknown) => {
     </table>
     </div>
   </div>
+
 </template>

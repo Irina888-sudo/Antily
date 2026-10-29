@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import '../App.css';
+const logout = () => localStorage.removeItem('access_token');
 </script>
 
 <template>

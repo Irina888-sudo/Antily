@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { apiClient } from '../api/client';
+
 
 const email = ref('');
 const password = ref('');
 const router = useRouter();
 
-const handleSubmit = () => {
-  router.push('/member');
+const handleSubmit = async () => {
+  try {
+    const data = await apiClient.create<{ access_token: string }>('auth/login', {
+      email: email.value,
+      password: password.value,
+    });
+    localStorage.setItem('access_token', data.access_token);
+    router.push('/member');
+  } catch {
+    error.value = 'Email ou mot de passe incorrect';
+  }
 };
 </script>
 
@@ -27,6 +38,7 @@ const handleSubmit = () => {
             Mot de passe
             <input id="password" type="password" v-model="password" required />
           </label>
+          <p v-if="error" class="empty-state">{{ error }}</p>
           <div class="form-actions">
             <button type="submit" class="btn">Se connecter</button>
           </div>
@@ -54,3 +66,5 @@ const handleSubmit = () => {
     </div>
   </div>
 </template>
+
+

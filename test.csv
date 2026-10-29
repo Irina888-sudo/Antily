@@ -1,0 +1,3 @@
+name,firstname,dateOfBirth,email,phone
+"Test","Un","2001-02-03","test1@mail.mg","0340000001"
+"Test","Deux","","test2@mail.mg",""

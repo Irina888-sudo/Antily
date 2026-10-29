@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { apiClient } from '../api/client';
+
 
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const router = useRouter();
 
-const handleSubmit = () => {
-  router.push('/login');
+const handleSubmit = async () => {
+  try {
+    await apiClient.create('auth/register', { email: email.value, password: password.value });
+    router.push('/login');
+  } catch {
+    error.value = 'Inscription impossible (email déjà utilisé ou mot de passe de moins de 8 caractères)';
+  }
 };
 </script>
 
