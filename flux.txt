@@ -43,3 +43,18 @@ sschema.txt — flux "afficher la liste des membres"
  (11) MemberList.vue    .then((data) => rows.value = data)
                          └─ .finally : loading = false
                          └─ le <template> (v-for sur rows) dessine le tableau
+
+
+
+
+#	Fichier	Ce que tu cherches
+1	member.entity.ts	La ligne qui déclare une colonne
+2	create-member.dto.ts ou register.dto.ts	Une ligne de validation (un décorateur @Is...)
+3	member.module.ts	La liste imports / providers / controllers
+4	member.service.ts	Le constructor avec @InjectRepository
+5	member.service.ts	Une méthode qui lit (find...) et une qui écrit (save)
+6	member.controller.ts	Une route : le décorateur (@Get, @Post...) et son corps
+7	member.controller.ts	Un paramètre : @Body(), @Param() ou @Query()
+8	jwt-auth.guard.ts	La ligne qui lit l’en-tête et celle qui vérifie le token
+9	client.ts	Le fetch avec l’en-tête Authorization
+10	MemberList.vue	onMounted et le v-for du tableau
