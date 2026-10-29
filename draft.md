@@ -51,7 +51,7 @@ Branch (le propriétaire)	        La liste de ses valises,            sans étiq
 
 
 schema.txt : le voyage complet
-
+--------------------------------------------------------------------------
 NAVIGATEUR (ton écran)
    │
    │ [1] tu tapes http://localhost:5173/member
@@ -78,7 +78,7 @@ NEST (port 3000)
 [11] lignes → objets Member → service → controller → JSON
 [12] client.ts : res.json() → MemberList.vue : rows.value = data
 [13] le tableau s'affiche à l'écran
-
+-----------------------------------------------------------------------
 
 schema.txt : le fil à retenir (mnémo : E-D-S-C-M)
 

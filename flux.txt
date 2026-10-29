@@ -1,0 +1,45 @@
+ http://localhost:5173/member
+ -index.ts
+ -MemberListVue -> un fonction bouton
+
+
+ -client.ts : create, list, get,...
+ -memberEntities
+ -CreateMemberDto
+ -MemberController
+ -memberService
+ -
+
+
+
+
+sschema.txt — flux "afficher la liste des membres"
+
+ DIRECTION 1 : la DEMANDE (navigateur ──► base)
+
+ GROUPE A — côté Vue
+ (1) navigateur          http://localhost:5173/member
+ (2) router/index.ts     relie /member à la page MemberList.vue
+                         (ton router.beforeEach y vérifie le jeton)
+ (3) MemberList.vue      onMounted(load)  → load() se lance seule au chargement
+ (4) api/client.ts       apiClient.list('member') → request('/member')
+                         └─ fetch GET avec  Authorization: Bearer <access_token>
+
+ GROUPE B — côté NestJS
+ (5) auth/jwt-auth.guard.ts   JwtAuthGuard.canActivate()   (posé par @UseGuards)
+                         └─ vérifie le badge  ─ faux → 401, la suite n'a pas lieu
+ (6) member.controller.ts     findAll()  ← route @Get()
+ (7) member.service.ts        findAll()  → this.repository.find({ relations: [...] })
+
+ GROUPE C — base de données
+ (8) TypeORM (Repository<Member>)   SELECT dans la table member
+                         └─ la forme des colonnes vient de member.entity.ts
+
+ DIRECTION 2 : la RÉPONSE (base ──► navigateur)
+
+ (9)  Postgres ─► TypeORM ─► MemberService.findAll() ─► MemberController.findAll()
+                         └─ NestJS transforme en JSON, statut 200
+ (10) api/client.ts     res.ok ? → res.json() renvoie les lignes à apiClient.list()
+ (11) MemberList.vue    .then((data) => rows.value = data)
+                         └─ .finally : loading = false
+                         └─ le <template> (v-for sur rows) dessine le tableau
